@@ -8,11 +8,12 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                sh '''sudo cd /home/ec2-user '''
                 dir("${CLONE_DIR}"){
                 git branch:"${BRANCH}",url:"${GIT_REPO}"
                 }
-                    
+                sh '''
+                sudo mv /var/lib/jenkins/workspace/terra/'''${CLONE_DIR}''' /home/ec2-user 
+                '''    
                 }
         }
         stage("Install terraform"){
@@ -27,10 +28,10 @@ pipeline {
         stage("run the app"){
             steps{
                 sh '''
-                cd demo/
-                terraform init
-                terraform plan
-                terraform apply 
+                cd /home/ec2-user/'''${CLONE_DIR}'''/
+                sudo terraform init
+                sudo terraform plan
+                sudo terraform apply 
                 '''
             }
         }
