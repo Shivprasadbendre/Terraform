@@ -11,6 +11,8 @@ pipeline {
                 dir("${CLONE_DIR}"){
                 git branch:"${BRANCH}",url:"${GIT_REPO}"
                 }
+            }
+            steps{
                 sh '''
                 sudo mv /var/lib/jenkins/workspace/terra/'''${CLONE_DIR}''' /home/ec2-user 
                 '''    
