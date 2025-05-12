@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                sh ''' cd /home/ec2-user '''
+                sh '''sudo cd /home/ec2-user '''
                 dir("${CLONE_DIR}"){
                 git branch:"${BRANCH}",url:"${GIT_REPO}"
                 }
