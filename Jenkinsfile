@@ -12,11 +12,6 @@ pipeline {
                 git branch:"${BRANCH}",url:"${GIT_REPO}"
                 }
             }
-            steps{
-                sh '''
-                sudo mv /var/lib/jenkins/workspace/terra/'''${CLONE_DIR}''' /home/ec2-user 
-                '''    
-                }
         }
         stage("Install terraform"){
             steps{
@@ -29,13 +24,16 @@ pipeline {
         }
         stage("run the app"){
             steps{
+                steps {
+                dir("${CLONE_DIR}"){
                 sh '''
-                cd /home/ec2-user/'''${CLONE_DIR}'''/
                 sudo terraform init
                 sudo terraform plan
                 sudo terraform apply 
                 '''
-            }
+             }
+           }
         }
+     }
     }
 }
